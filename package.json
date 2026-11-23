@@ -1,0 +1,30 @@
+{
+  "name": "universal-sdlc",
+  "version": "1.0.0",
+  "description": "Universal AI SDLC plugin and CLI for Google Antigravity.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": {
+    "universal-sdlc": "./scripts/cli.mjs"
+  },
+  "scripts": {
+    "validate": "node scripts/check-contracts.mjs --plugin . --strict",
+    "test": "node --test scripts/test.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-Arabian-knights/AIToolbox.git"
+  },
+  "keywords": [
+    "antigravity",
+    "sdlc",
+    "architecture",
+    "threat-modeling",
+    "governance",
+    "icm",
+    "graphify"
+  ]
+}

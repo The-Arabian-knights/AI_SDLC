@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "sdlc-ledger": {
+      "command": "node",
+      "args": [
+        "${PLUGIN_ROOT}/scripts/mcp-sdlc-server.mjs",
+        "--data-dir",
+        "${PLUGIN_DATA}"
+      ],
+      "env": {
+        "SDLC_CACHE_DIR": "${PLUGIN_DATA}/cache"
+      }
+    }
+  }
+}

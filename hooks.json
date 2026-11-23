@@ -1,0 +1,62 @@
+{
+  "sdlc-session-context": {
+    "enabled": true,
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node ./scripts/hooks/session-start.mjs",
+        "timeout": 10
+      }
+    ]
+  },
+  "sdlc-pretool-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./scripts/hooks/pre-tool-guard.mjs",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content|edit_file|write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./scripts/hooks/pre-tool-guard.mjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "sdlc-posttool-check": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content|edit_file|write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./scripts/hooks/post-tool-check.mjs",
+            "timeout": 12
+          }
+        ]
+      }
+    ]
+  },
+  "sdlc-stop-proof-gate": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node ./scripts/hooks/stop-proof-gate.mjs",
+        "timeout": 10
+      }
+    ]
+  }
+}

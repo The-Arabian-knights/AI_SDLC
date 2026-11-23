@@ -1,0 +1,30 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "universal-sdlc",
+  "displayName": "Universal AI SDLC",
+  "version": "1.0.0",
+  "description": "Stack-agnostic SDLC governance with graph context, design gates, threat modeling, auditable artifacts, and verifiable proof.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Initialize Universal SDLC governance and choose a project profile for this repository",
+    "Run a no-code design gate and threat model review before implementing the next feature",
+    "Audit spec-to-code drift, traceability links, and Proof Checklist completion"
+  ],
+  "author": {
+    "name": "The-Arabian-knights",
+    "url": "https://github.com/The-Arabian-knights"
+  },
+  "homepage": "https://github.com/The-Arabian-knights/AIToolbox",
+  "repository": "https://github.com/The-Arabian-knights/AIToolbox",
+  "license": "MIT",
+  "keywords": [
+    "sdlc",
+    "architecture",
+    "threat-modeling",
+    "verification",
+    "governance",
+    "traceability",
+    "graphify",
+    "icm"
+  ]
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="20" y1="14" x2="108" y2="114" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1E40AF"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="36" y1="36" x2="94" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer shield with ~10% transparent margin -->
+  <path d="M64 14L108 30V63C108 87.5 89.2 106.5 64 114C38.8 106.5 20 87.5 20 63V30L64 14Z"
+        fill="url(#shieldGrad)" stroke="#E2E8F0" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Inner hexagonal structural frame -->
+  <path d="M64 25L97 37.5V62C97 80.5 82.8 95.5 64 102C45.2 95.5 31 80.5 31 62V37.5L64 25Z"
+        fill="#0F172A" fill-opacity="0.45" stroke="url(#accentGrad)" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Context graph edges -->
+  <path d="M44 49L64 39L84 49M44 49V71L64 84L84 71V49"
+        stroke="#93C5FD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.85"/>
+  <!-- Proof verification checkmark -->
+  <path d="M49 62L59.5 72.5L80 51"
+        stroke="#34D399" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Graph nodes -->
+  <circle cx="64" cy="39" r="4.5" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/>
+  <circle cx="44" cy="49" r="4" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/>
+  <circle cx="84" cy="49" r="4" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/>
+  <circle cx="44" cy="71" r="4" fill="#F8FAFC" stroke="#34D399" stroke-width="2"/>
+  <circle cx="84" cy="71" r="4" fill="#F8FAFC" stroke="#34D399" stroke-width="2"/>
+  <circle cx="64" cy="84" r="4.5" fill="#F8FAFC" stroke="#34D399" stroke-width="2"/>
+</svg>

@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "1.0.0",
+  "sdlcOverview": {
+    "pipeline": "Requirements -> Architecture -> Threat Model -> Specification -> Implementation -> Verification -> Release & Maintenance",
+    "summary": "Universal AI SDLC installs into its own isolated plugin directory and initializes a single .sdlc/ folder inside each project you onboard, leaving your app source code clean.",
+    "isolation": {
+      "globalPluginDir": "~/.gemini/config/plugins/universal-sdlc",
+      "workspacePluginDir": ".agents/plugins/universal-sdlc",
+      "overridesDir": "~/.gemini/config/universal-sdlc-overrides (or .agents/universal-sdlc-overrides)",
+      "projectStateDir": "<project>/.sdlc/"
+    }
+  },
+  "addons": [
+    {
+      "id": "core-icm",
+      "name": "Core ICM Governance & Specs",
+      "kind": "builtin-module",
+      "required": true,
+      "defaultIncluded": true,
+      "sdlcStage": "All Stages (01-07) + Spec & Proof",
+      "sdlcRole": "Provides the 7-stage folder structure (.sdlc/), traceable REQ->ADR->THR->SPEC->PROOF contracts, proof-auditor, MCP ledger, and add-on manager.",
+      "benefit": "Keeps requirements, decisions, and verification proof organized on disk so AI agents and humans share one verifiable source of truth.",
+      "components": [
+        "rules/AGENTS.md",
+        "rules/sdlc-governance.md",
+        "rules/architecture-and-specs.md",
+        "rules/tests-and-proof.md",
+        "skills/sdlc-init",
+        "skills/spec-and-proof",
+        "skills/sdlc-addons",
+        "agents/proof-auditor.md"
+      ]
+    },
+    {
+      "id": "egm-design-gate",
+      "name": "EGM No-Code Design Gate",
+      "kind": "builtin-module",
+      "required": false,
+      "defaultIncluded": true,
+      "sdlcStage": "Stage 02: Architecture",
+      "sdlcRole": "Blocks premature coding by requiring trade-off analysis, system boundaries, and a fresh-context review via the read-only arch-reviewer subagent.",
+      "benefit": "Catches hidden assumptions, vague specs, and architectural blind spots before writing code, reducing costly rewrites.",
+      "components": [
+        "skills/egm-design-gate",
+        "agents/arch-reviewer.md"
+      ]
+    },
+    {
+      "id": "graphify-context",
+      "name": "Graphify Context Intelligence",
+      "kind": "builtin-module",
+      "required": false,
+      "defaultIncluded": true,
+      "sdlcStage": "Stage 02 & 07: Discovery & Blast Radius",
+      "sdlcRole": "Queries graphify-out/ knowledge graphs first (with EXTRACTED/INFERRED confidence tags) and falls back cleanly to targeted static search when absent.",
+      "benefit": "Maps cross-module dependencies and blast radius with far fewer wasted tokens and clearer impact visibility.",
+      "components": [
+        "skills/graphify-context"
+      ]
+    },
+    {
+      "id": "threat-and-verify",
+      "name": "Threat Modeling & Profile Gates",
+      "kind": "builtin-module",
+      "required": false,
+      "defaultIncluded": true,
+      "sdlcStage": "Stage 03 & 06: Security & Verification",
+      "sdlcRole": "Enforces pre-code threat models, read-only security-reviewer audits, and profile-scaled verification gates (web, API, mobile, desktop, game).",
+      "benefit": "Catches auth, secret, and injection gaps before implementation and right-sizes security checks to your stack.",
+      "components": [
+        "skills/threat-and-verify",
+        "agents/security-reviewer.md",
+        "rules/security-and-secrets.md",
+        "rules/profile-adaptive-verification.md"
+      ]
+    },
+    {
+      "id": "triage-and-evolve",
+      "name": "Maintenance, Drift & Evolution",
+      "kind": "builtin-module",
+      "required": false,
+      "defaultIncluded": true,
+      "sdlcStage": "Stage 07: Release & Maintenance",
+      "sdlcRole": "Enforces repro-first bug fixes, spec-to-code drift detection, and promotion of recurring mistakes into permanent rules or checks.",
+      "benefit": "Stops specs from rotting over time and turns every resolved bug or review finding into an automated guardrail.",
+      "components": [
+        "skills/triage-and-evolve"
+      ]
+    },
+    {
+      "id": "lifecycle-hooks",
+      "name": "Antigravity Lifecycle Hooks",
+      "kind": "builtin-module",
+      "required": false,
+      "defaultIncluded": true,
+      "sdlcStage": "Runtime Guardrails (SessionStart, Pre/PostToolUse, Stop)",
+      "sdlcRole": "Injects active .sdlc/ context at session start, blocks destructive shell commands and secret writes, logs fast checks, and checks Proof completion on Stop.",
+      "benefit": "Provides automatic safety rails against accidental data loss, leaked credentials, and unverified task completion.",
+      "components": [
+        "hooks.json"
+      ]
+    },
+    {
+      "id": "companion-graphify",
+      "name": "Graphify CLI Engine (External)",
+      "kind": "companion-cli",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "Apache-2.0",
+      "homepage": "https://graphify.com",
+      "repository": "https://github.com/Graphify-Labs/graphify",
+      "detectBinaries": ["graphify"],
+      "installCommands": {
+        "uv": "uv tool install graphifyy",
+        "pip": "pip install graphifyy"
+      },
+      "sdlcStage": "Stage 02 & 07: Structural Knowledge Graph",
+      "sdlcRole": "Builds AST + semantic knowledge graphs (graphify-out/graph.json & GRAPH_REPORT.md) across code, docs, and diagrams.",
+      "benefit": "Powers fast graph queries, shortest paths, and community detection on medium/large repositories without loading whole trees."
+    },
+    {
+      "id": "companion-egm",
+      "name": "Elephant-Goldfish Model Plugin (Upstream)",
+      "kind": "companion-plugin",
+      "folderName": "egm",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "Apache-2.0",
+      "homepage": "https://egm.dev",
+      "repository": "https://github.com/google/elephant-goldfish-model",
+      "installCommands": {
+        "agy": "agy plugin install https://github.com/google/elephant-goldfish-model",
+        "git": "git clone --depth 1 https://github.com/google/elephant-goldfish-model"
+      },
+      "sdlcStage": "Stage 02 & 07: Multi-Lens EGM Review",
+      "sdlcRole": "Adds Google's full standalone EGM skill suite (/egm:egm-brainstorm, egm-draft, egm-review-loop, egm-drift-report) alongside Universal SDLC.",
+      "benefit": "Gives you multi-critic design review loops and full upstream EGM commands whenever deeper brainstorming is needed."
+    },
+    {
+      "id": "companion-icm-architect",
+      "name": "ICM Architect Skill (Upstream)",
+      "kind": "companion-skill",
+      "folderName": "icm-architect",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "MIT",
+      "homepage": "https://arxiv.org/abs/2603.16021",
+      "repository": "https://github.com/RinDig/icm-architect",
+      "installCommands": {
+        "git": "git clone --depth 1 https://github.com/RinDig/icm-architect"
+      },
+      "sdlcStage": "Stage 01 & 02: Custom Workspace & Vault Design",
+      "sdlcRole": "Adds Jake Van Clief's standalone icm-architect skill for restructuring messy repos, knowledge vaults, or custom agent pipelines.",
+      "benefit": "Helps reorganize sprawling documentation or custom agent folders into clean walkable ICM structures beyond .sdlc/."
+    },
+    {
+      "id": "companion-gitleaks",
+      "name": "Gitleaks Secret Scanner",
+      "kind": "companion-cli",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "MIT",
+      "homepage": "https://gitleaks.io",
+      "repository": "https://github.com/gitleaks/gitleaks",
+      "detectBinaries": ["gitleaks"],
+      "installCommands": {
+        "brew": "brew install gitleaks",
+        "winget": "winget install Gitleaks.Gitleaks"
+      },
+      "sdlcStage": "Stage 06: Baseline Security Gate",
+      "sdlcRole": "Scans git history and working trees for leaked passwords, API tokens, and private keys during verify-profile runs.",
+      "benefit": "Catches historical or committed secrets across the repository before code leaves your workstation."
+    },
+    {
+      "id": "companion-semgrep",
+      "name": "Semgrep SAST Scanner",
+      "kind": "companion-cli",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "LGPL-2.1",
+      "homepage": "https://semgrep.dev",
+      "repository": "https://github.com/semgrep/semgrep",
+      "detectBinaries": ["semgrep"],
+      "installCommands": {
+        "pip": "pip install semgrep",
+        "brew": "brew install semgrep"
+      },
+      "sdlcStage": "Stage 06: Profile SAST Gate",
+      "sdlcRole": "Runs fast multi-language static security analysis (XSS, SQLi, SSRF, insecure defaults) for web, API, mobile, and desktop profiles.",
+      "benefit": "Finds common vulnerability classes automatically across multiple languages using community and custom rules."
+    },
+    {
+      "id": "companion-trivy",
+      "name": "Trivy Dependency & Container Scanner",
+      "kind": "companion-cli",
+      "required": false,
+      "defaultIncluded": false,
+      "license": "Apache-2.0",
+      "homepage": "https://trivy.dev",
+      "repository": "https://github.com/aquasecurity/trivy",
+      "detectBinaries": ["trivy"],
+      "installCommands": {
+        "brew": "brew install trivy",
+        "winget": "winget install AquaSecurity.Trivy"
+      },
+      "sdlcStage": "Stage 06: Baseline & Container Vuln Gate",
+      "sdlcRole": "Scans lockfiles, containers, and IaC configs for known CVEs and misconfigurations.",
+      "benefit": "Prevents shipping vulnerable third-party dependencies or insecure Docker/Kubernetes configurations."
+    }
+  ]
+}
